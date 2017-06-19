@@ -41,6 +41,20 @@ def ground_thresh(img, rgb_thresh=(160, 160, 160)):
     color_select[above_thresh] = 1
     # Return the binary image
     return color_select
+
+def navigable_terrain(img):
+    #a new container for the image wiht RGB channels
+    nav_terr = np.zeros_like(img)
+    binary_nav = color_thresh(img)
+    #all red
+    nav_terr[:,:,0] = 255
+    ypos, xpos = binary_nav.nonzero()
+    nav_terr[ypos,xpos, 0] = 0
+    #ypos,xpos = binary_nav.where(binary_nav>0)
+    nav_terr[ypos,xpos , 2] = 255
+    return nav_terr
+
+
 # Define a function to convert to radial coords in rover space
 def to_polar_coords(x_pixel, y_pixel):
     # Convert (x_pixel, y_pixel) to (distance, angle)
