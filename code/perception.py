@@ -104,6 +104,15 @@ def perspect_transform(img, src, dst):
 
     return warped
 
+def check_if_capture_valid_for_mapping(roll_angle,pith_angle,angle_max_deviation):
+    #we should only map when the angles of roll and pith are below some value
+    if roll_angle > 360 - angle_max_deviation or roll_angle < angle_max_deviation:
+        if pith_angle > 360 - angle_max_deviation or pith_angle < angle_max_deviation:
+            return True
+        else:
+            return False
+    else:
+        return False
 
 # Apply the above functions in succession and update the Rover state accordingly
 def perception_step(Rover):
