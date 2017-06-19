@@ -42,6 +42,23 @@ def ground_thresh(img, rgb_thresh=(160, 160, 160)):
     # Return the binary image
     return color_select
 
+def rock_detector(img):
+    #Isolate yellow pixel's from the colored rock_images
+
+    #Value selection for the upper and lower yellow can be found in rock_detector.py
+    lower_yellow = np.array([0,82,0])
+    upper_yellow = np.array([255,255,50])
+    # Threshold the BRG image to get only blue colors
+    mask = cv2.inRange(img, lower_yellow, upper_yellow)
+
+    # Bitwise-AND mask and original image
+    res = cv2.bitwise_and(img,img, mask= mask)
+    #apply color_select to our new res image
+    color_select = color_thresh(res,(0,82,0))
+
+    return color_select
+
+
 def navigable_terrain(img):
     #a new container for the image wiht RGB channels
     nav_terr = np.zeros_like(img)
